@@ -21,9 +21,11 @@ function submitData(name, email) {
     })
     .then(function (object) {
       console.log(object);
+      alert(error.message);
+
     })
     .catch(function (error) {
-      alert("Bad things! Ragnarők!");
+      alert(error.message);
       console.log(error.message);
     });
 }
