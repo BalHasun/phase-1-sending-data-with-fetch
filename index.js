@@ -1,10 +1,7 @@
-const rando = Math.ceil(Math.random() * 1000);
-
 function submitData(name, email) {
   const formData = {
-    id: rando,
-    name: name.value,
-    email: email.value,
+    name: name,
+    email: email,
   };
   const configurationObject = {
     method: "POST",
@@ -15,28 +12,29 @@ function submitData(name, email) {
     body: JSON.stringify(formData),
   };
 
-  fetch("http://localhost:3000/users ", configurationObject)
+  return fetch("http://localhost:3000/users", configurationObject)
     .then(function (response) {
       return response.json();
     })
     .then(function (object) {
-      console.log(object);
-      alert(error.message);
-
+      const id = object.id;
+      document.body.innerHTML += `<p>New user ID: ${id}</p>`;
     })
     .catch(function (error) {
-      alert(error.message);
-      console.log(error.message);
+      document.body.innerHTML += `<p>Error: ${error.message}</p>`;
     });
 }
-function handleSubimt(event) {
+
+function handleSubmit(event) {
   event.preventDefault();
-  const name = document.querySelector("input#userName");
-  const email = document.querySelector("input#userEmail");
+  const nameInput = document.querySelector("input#userName");
+  const emailInput = document.querySelector("input#userEmail");
+  const name = nameInput.value;
+  const email = emailInput.value;
   submitData(name, email);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   const inputForm = document.querySelector("form");
-  inputForm.addEventListener("submit", handleSubimt);
+  inputForm.addEventListener("submit", handleSubmit);
 });
